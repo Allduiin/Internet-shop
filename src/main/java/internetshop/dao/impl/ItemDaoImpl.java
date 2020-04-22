@@ -1,20 +1,23 @@
 package internetshop.dao.impl;
 
 import internetshop.dao.ItemDao;
+import internetshop.lib.Dao;
 import internetshop.model.Item;
 import internetshop.storage.Storage;
-
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
+@Dao
 public class ItemDaoImpl implements ItemDao {
     @Override
     public Item create(Item item) {
-
+        Storage.addItem(item);
+        return item;
     }
 
     @Override
-    public Optional<Item> get(Long id) {
+    public Optional<Item> getById(Long id) {
         return Storage.items.stream()
                 .filter(i -> i.getId().equals(id))
                 .findFirst();
@@ -27,11 +30,19 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public Item update(Item item) {
-        return null;
+        IntStream.range(0, Storage.items.size())
+                .filter(x -> item.getId().equals(Storage.items.get(x).getId()))
+                .forEach(i -> Storage.items.set(i, item));
+        return item;
     }
 
     @Override
     public boolean delete(Long id) {
-        return false;
+        if (id > 0 || id < Storage.items.size()) {
+            Storage.items.remove(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
