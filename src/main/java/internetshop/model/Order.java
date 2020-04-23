@@ -3,20 +3,20 @@ package internetshop.model;
 import java.util.List;
 
 public class Order {
-    private Long id;
     private User user;
     private List<Product> products;
+    private long id;
 
-    public Order(List<Product> products,User user) {
+    public Order(User user, List<Product> products) {
         this.user = user;
         this.products = products;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -34,14 +34,5 @@ public class Order {
 
     public void setProducts(List<Product> products) {
         this.products = products;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{"
-                + "id=" + id
-                + ", user=" + user
-                + ", products=" + products
-                + '}';
     }
 }
