@@ -3,18 +3,18 @@ package internetshop.model;
 public class User {
     private String login;
     private String password;
-    private long id;
+    private Long id;
 
     public User(String login, String password) {
         this.login = login;
         this.password = password;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
