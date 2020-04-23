@@ -2,6 +2,7 @@ package internetshop.service;
 
 import internetshop.model.Product;
 import internetshop.model.ShoppingCart;
+
 import java.util.List;
 
 public interface ShoppingCartService {
@@ -14,8 +15,6 @@ public interface ShoppingCartService {
     ShoppingCart getByUserId(Long userId);
 
     List<Product> getAllProducts(ShoppingCart shoppingCart);
-
-    List<ShoppingCart> getAllShoppingCarts();
 
     ShoppingCart create(ShoppingCart shoppingCart);
 }
