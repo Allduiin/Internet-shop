@@ -1,23 +1,22 @@
 package internetshop.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
-    private Long id;
     private User user;
     private List<Product> products;
+    private long id;
 
-    public ShoppingCart(User user) {
+    public ShoppingCart(User user, List<Product> products) {
         this.user = user;
-        products = new ArrayList<>();
+        this.products = products;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -39,14 +38,5 @@ public class ShoppingCart {
 
     public void addItem(Product product) {
         products.add(product);
-    }
-
-    @Override
-    public String toString() {
-        return "ShoppingCart{"
-                + "id=" + id
-                + ", user=" + user
-                + ", products=" + products
-                + '}';
     }
 }
