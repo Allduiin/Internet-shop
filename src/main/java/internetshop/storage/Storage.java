@@ -1,15 +1,15 @@
 package internetshop.storage;
 
-import internetshop.model.Order;
-import internetshop.model.Product;
 import internetshop.model.ShoppingCart;
+import internetshop.model.Product;
+import internetshop.model.Order;
 import internetshop.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Storage {
-    public static final List<ShoppingCart> shoppingCarts = new ArrayList<>();
-    public static final List<Product> products = new ArrayList<>();
+    public static final List<ShoppingCart> SHOPPING_CARTS = new ArrayList<>();
+    public static final List<Product> PRODUCTS = new ArrayList<>();
     public static final List<Order> orders = new ArrayList<>();
     public static final List<User> users = new ArrayList<>();
     private static Long orderId = 0L;
@@ -17,10 +17,10 @@ public class Storage {
     private static Long userId = 0L;
     private static Long bucketId = 0L;
 
-    public static void addProduct(Product product) {
+    public static void addItem(Product product) {
         itemId++;
         product.setId(itemId);
-        products.add(product);
+        PRODUCTS.add(product);
     }
 
     public static void addUser(User user) {
@@ -29,10 +29,10 @@ public class Storage {
         users.add(user);
     }
 
-    public static void addShoppingCart(ShoppingCart shoppingCart) {
+    public static void addBucket(ShoppingCart shoppingCart) {
         bucketId++;
         shoppingCart.setId(bucketId);
-        shoppingCarts.add(shoppingCart);
+        SHOPPING_CARTS.add(shoppingCart);
     }
 
     public static void addOrder(Order order) {
