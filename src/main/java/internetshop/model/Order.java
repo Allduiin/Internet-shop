@@ -4,12 +4,12 @@ import java.util.List;
 
 public class Order {
     private User user;
-    private List<Item> items;
+    private List<Product> products;
     private long id;
 
-    public Order(User user, List<Item> items) {
+    public Order(User user, List<Product> products) {
         this.user = user;
-        this.items = items;
+        this.products = products;
     }
 
     public long getId() {
@@ -28,11 +28,11 @@ public class Order {
         this.user = user;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }
