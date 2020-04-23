@@ -5,8 +5,8 @@ import internetshop.lib.Inject;
 import internetshop.lib.Service;
 import internetshop.model.Item;
 import internetshop.service.ItemService;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -19,8 +19,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Optional<Item> getById(Long id) {
-        return itemDao.getById(id);
+    public Item getById(Long id) {
+        return itemDao.getById(id).orElse(null);
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface ItemService {
     Item create(Item item);
 
-    Optional<Item> getById(Long id);
+    Item getById(Long id);
 
     List<Item> getAll();
 
