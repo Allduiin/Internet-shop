@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Storage {
-    public static final List<ShoppingCart> SHOPPING_CARTS = new ArrayList<>();
-    public static final List<Product> PRODUCTS = new ArrayList<>();
+    public static final List<ShoppingCart> shoppingCarts = new ArrayList<>();
+    public static final List<Product> products = new ArrayList<>();
     public static final List<Order> orders = new ArrayList<>();
     public static final List<User> users = new ArrayList<>();
     private static Long orderId = 0L;
@@ -17,10 +17,10 @@ public class Storage {
     private static Long userId = 0L;
     private static Long bucketId = 0L;
 
-    public static void addItem(Product product) {
+    public static void addProduct(Product product) {
         itemId++;
         product.setId(itemId);
-        PRODUCTS.add(product);
+        products.add(product);
     }
 
     public static void addUser(User user) {
@@ -29,10 +29,10 @@ public class Storage {
         users.add(user);
     }
 
-    public static void addBucket(ShoppingCart shoppingCart) {
+    public static void addShoppingCart(ShoppingCart shoppingCart) {
         bucketId++;
         shoppingCart.setId(bucketId);
-        SHOPPING_CARTS.add(shoppingCart);
+        shoppingCarts.add(shoppingCart);
     }
 
     public static void addOrder(Order order) {
