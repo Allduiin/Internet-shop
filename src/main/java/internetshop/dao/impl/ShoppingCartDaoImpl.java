@@ -2,9 +2,11 @@ package internetshop.dao.impl;
 
 import internetshop.dao.ShoppingCartDao;
 import internetshop.lib.Dao;
+import internetshop.model.Order;
 import internetshop.model.Product;
 import internetshop.model.ShoppingCart;
 import internetshop.storage.Storage;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -30,11 +32,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
                 .filter(x -> shoppingCart.getId().equals(Storage.shoppingCarts.get(x).getId()))
                 .forEach(s -> Storage.shoppingCarts.set(s, shoppingCart));
         return shoppingCart;
-    }
-
-    @Override
-    public List<ShoppingCart> getAllShoppingCarts() {
-        return Storage.shoppingCarts;
     }
 
     @Override

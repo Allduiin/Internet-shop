@@ -13,7 +13,5 @@ public interface ShoppingCartDao {
 
     ShoppingCart update(ShoppingCart shoppingCart);
 
-    List<ShoppingCart> getAllShoppingCarts();
-
     ShoppingCart create(ShoppingCart shoppingCart);
 }
