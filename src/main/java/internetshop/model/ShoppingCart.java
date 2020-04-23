@@ -2,14 +2,14 @@ package internetshop.model;
 
 import java.util.List;
 
-public class Bucket {
+public class ShoppingCart {
     private User user;
-    private List<Item> items;
+    private List<Product> products;
     private long id;
 
-    public Bucket(User user, List<Item> items) {
+    public ShoppingCart(User user, List<Product> products) {
         this.user = user;
-        this.items = items;
+        this.products = products;
     }
 
     public long getId() {
@@ -28,15 +28,15 @@ public class Bucket {
         this.user = user;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
-    public void addItem(Item item) {
-        items.add(item);
+    public void addItem(Product product) {
+        products.add(product);
     }
 }
