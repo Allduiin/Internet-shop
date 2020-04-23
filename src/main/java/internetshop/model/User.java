@@ -1,9 +1,9 @@
 package internetshop.model;
 
 public class User {
-    private Long id;
     private String login;
     private String password;
+    private Long id;
 
     public User(String login, String password) {
         this.login = login;
@@ -32,14 +32,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{"
-                + "id=" + id
-                + ", login='" + login + '\''
-                + ", password='" + password
-                + '}';
     }
 }

@@ -16,7 +16,5 @@ public interface ShoppingCartService {
 
     List<Product> getAllProducts(ShoppingCart shoppingCart);
 
-    List<ShoppingCart> getAllShoppingCarts();
-
     ShoppingCart create(ShoppingCart shoppingCart);
 }
