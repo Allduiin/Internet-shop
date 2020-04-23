@@ -6,6 +6,7 @@ import internetshop.lib.Service;
 import internetshop.model.Product;
 import internetshop.model.ShoppingCart;
 import internetshop.service.ShoppingCartService;
+
 import java.util.List;
 
 @Service
@@ -39,11 +40,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public List<Product> getAllProducts(ShoppingCart shoppingCart) {
         return shoppingCartDao.getAllProducts(shoppingCart);
-    }
-
-    @Override
-    public List<ShoppingCart> getAllShoppingCarts() {
-        return shoppingCartDao.getAllShoppingCarts();
     }
 
     @Override
