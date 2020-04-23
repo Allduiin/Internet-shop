@@ -43,11 +43,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public List<ShoppingCart> getAllShoppingCarts() {
-        return shoppingCartDao.getAllShoppingCarts();
-    }
-
-    @Override
     public ShoppingCart create(ShoppingCart shoppingCart) {
         return shoppingCartDao.create(shoppingCart);
     }

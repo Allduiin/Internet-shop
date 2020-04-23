@@ -12,37 +12,32 @@ import java.util.stream.IntStream;
 public class ProductDaoImpl implements ProductDao {
     @Override
     public Product create(Product product) {
-        Storage.addItem(product);
+        Storage.addProduct(product);
         return product;
     }
 
     @Override
     public Optional<Product> getById(Long id) {
-        return Storage.PRODUCTS.stream()
+        return Storage.products.stream()
                 .filter(i -> i.getId().equals(id))
                 .findFirst();
     }
 
     @Override
     public List<Product> getAll() {
-        return Storage.PRODUCTS;
+        return Storage.products;
     }
 
     @Override
     public Product update(Product product) {
-        IntStream.range(0, Storage.PRODUCTS.size())
-                .filter(x -> product.getId().equals(Storage.PRODUCTS.get(x).getId()))
-                .forEach(i -> Storage.PRODUCTS.set(i, product));
+        IntStream.range(0, Storage.products.size())
+                .filter(x -> product.getId().equals(Storage.products.get(x).getId()))
+                .forEach(i -> Storage.products.set(i, product));
         return product;
     }
 
     @Override
     public boolean delete(Long id) {
-        if (id > 0 || id < Storage.PRODUCTS.size()) {
-            Storage.PRODUCTS.remove(id);
-            return true;
-        } else {
-            return false;
-        }
+        return Storage.products.removeIf(product -> product.getId().equals(id));
     }
 }
