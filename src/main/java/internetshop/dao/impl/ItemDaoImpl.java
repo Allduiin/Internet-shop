@@ -38,11 +38,6 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public boolean delete(Long id) {
-        if (id > 0 || id < Storage.items.size()) {
-            Storage.items.remove(id);
-            return true;
-        } else {
-            return false;
-        }
+        return Storage.items.removeIf(item -> item.getId().equals(id));
     }
 }
