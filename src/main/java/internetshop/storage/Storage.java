@@ -1,8 +1,8 @@
 package internetshop.storage;
 
-import internetshop.model.ShoppingCart;
-import internetshop.model.Product;
 import internetshop.model.Order;
+import internetshop.model.Product;
+import internetshop.model.ShoppingCart;
 import internetshop.model.User;
 import java.util.ArrayList;
 import java.util.List;
