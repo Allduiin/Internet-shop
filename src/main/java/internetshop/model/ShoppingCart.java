@@ -5,18 +5,18 @@ import java.util.List;
 public class ShoppingCart {
     private User user;
     private List<Product> products;
-    private long id;
+    private Long id;
 
     public ShoppingCart(User user, List<Product> products) {
         this.user = user;
         this.products = products;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
