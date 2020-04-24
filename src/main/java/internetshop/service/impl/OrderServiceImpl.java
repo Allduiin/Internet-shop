@@ -20,7 +20,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order completeOrder(List<Product> products, User user) {
-        Order order = orderDao.create(products, user);
+        Order order = new Order(products, user);
+        order = orderDao.create(order);
         ShoppingCartService shoppingCartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
         shoppingCartService.clear(shoppingCartService.getByUserId(user.getId()));
