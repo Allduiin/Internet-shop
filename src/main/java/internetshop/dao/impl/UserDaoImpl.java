@@ -31,7 +31,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User update(User user) {
         IntStream.range(0, Storage.users.size())
-                .filter(x -> user.getId().equals(Storage.users.get(x)))
+                .filter(x -> user.getId().equals(Storage.users.get(x).getId()))
                 .forEach(x -> Storage.users.set(x, user));
         return user;
     }

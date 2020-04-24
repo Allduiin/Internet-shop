@@ -3,7 +3,6 @@ package internetshop.dao.impl;
 import internetshop.dao.OrderDao;
 import internetshop.lib.Dao;
 import internetshop.model.Order;
-import internetshop.model.Product;
 import internetshop.model.User;
 import internetshop.storage.Storage;
 import java.util.List;
@@ -14,10 +13,10 @@ import java.util.stream.IntStream;
 @Dao
 public class OrderDaoImpl implements OrderDao {
     @Override
-    public Order create(List<Product> products, User user) {
-        Order order = new Order(List.copyOf(products),user);
-        Storage.addOrder(order);
-        return order;
+    public Order create(Order order) {
+        Order orderClone = new Order(List.copyOf(order.getProducts()), order.getUser());
+        Storage.addOrder(orderClone);
+        return orderClone;
     }
 
     @Override
@@ -49,6 +48,6 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public boolean delete(Long id) {
-        return Storage.orders.remove(id);
+        return Storage.orders.removeIf(order -> order.getId().equals(id));
     }
 }
