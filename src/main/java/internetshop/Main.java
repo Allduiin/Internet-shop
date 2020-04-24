@@ -9,7 +9,6 @@ import internetshop.service.OrderService;
 import internetshop.service.ProductService;
 import internetshop.service.ShoppingCartService;
 import internetshop.service.UserService;
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -54,23 +53,23 @@ public class Main {
         productService.create(product2);
         productService.create(product3);
 
-        User user1 = new User("Pasha","15fe32d5f");
-        User user2 = new User("Vasia","8734t");
-        User user3 = new User("Petia","df15");
+        User user1 = new User("Pasha", "15fe32d5f");
+        User user2 = new User("Vasia", "8734t");
+        User user3 = new User("Petia", "df15");
         userService.create(user1);
         userService.create(user2);
         userService.create(user3);
 
         ShoppingCart shoppingCart1 = new ShoppingCart(user1);
         shoppingCartService.create(shoppingCart1);
-        shoppingCartService.addProduct(shoppingCart1,product1);
-        shoppingCartService.addProduct(shoppingCart1,product2);
+        shoppingCartService.addProduct(shoppingCart1, product1);
+        shoppingCartService.addProduct(shoppingCart1, product2);
 
         ShoppingCart shoppingCart2 = new ShoppingCart(user2);
         shoppingCartService.create(shoppingCart2);
-        shoppingCartService.addProduct(shoppingCart2,product2);
-        shoppingCartService.addProduct(shoppingCart2,product3);
+        shoppingCartService.addProduct(shoppingCart2, product2);
+        shoppingCartService.addProduct(shoppingCart2, product3);
 
-        orderService.completeOrder(Arrays.asList(product1,product2), shoppingCart1.getUser());
+        orderService.completeOrder(shoppingCart1.getProducts(), shoppingCart1.getUser());
     }
 }
