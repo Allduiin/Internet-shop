@@ -32,7 +32,7 @@ public class Main {
             System.out.println(user.toString());
         }
 
-        List<ShoppingCart> allShoppingCarts = shoppingCartService.getAllShoppingCarts();
+        List<ShoppingCart> allShoppingCarts = shoppingCartService.getAll();
         for (ShoppingCart shoppingCart : allShoppingCarts) {
             System.out.println(shoppingCart.toString());
         }
@@ -59,6 +59,7 @@ public class Main {
         userService.create(user1);
         userService.create(user2);
         userService.create(user3);
+        userService.delete(user3.getId());
 
         ShoppingCart shoppingCart1 = new ShoppingCart(user1);
         shoppingCartService.create(shoppingCart1);
@@ -70,6 +71,7 @@ public class Main {
         shoppingCartService.addProduct(shoppingCart2, product2);
         shoppingCartService.addProduct(shoppingCart2, product3);
 
-        orderService.completeOrder(shoppingCart1.getProducts(), shoppingCart1.getUser());
+        orderService.completeOrder(shoppingCartService.getById(shoppingCart1.getId()).getProducts(),
+                shoppingCart1.getUser());
     }
 }
