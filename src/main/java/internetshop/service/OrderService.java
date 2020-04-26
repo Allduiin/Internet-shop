@@ -5,14 +5,8 @@ import internetshop.model.Product;
 import internetshop.model.User;
 import java.util.List;
 
-public interface OrderService {
+public interface OrderService extends GenericService<Order> {
     Order completeOrder(List<Product> products, User user);
 
     List<Order> getUserOrders(User user);
-
-    Order get(Long id);
-
-    List<Order> getAll();
-
-    boolean delete(Long id);
 }
