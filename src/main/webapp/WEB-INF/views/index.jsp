@@ -1,16 +1,10 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Shadow
-  Date: 26.04.2020
-  Time: 12:45
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-    hello
+<h2><center>Hi! Current time is ${time}</h2>
+<a href="${pageContext.request.contextPath}/injectData">Add test data to DB</a>
 </body>
 </html>
