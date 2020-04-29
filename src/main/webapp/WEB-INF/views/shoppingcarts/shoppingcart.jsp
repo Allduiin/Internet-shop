@@ -23,8 +23,12 @@
         <td>
             <c:out value="${product.price}"/>
         </td>
+        <td>
+            <a href="${pageContext.request.contextPath}/shoppingCart/deleteProduct?id=${product.id}">Delete</a>
+        </td>
     </tr>
 </c:forEach>
 </table>
+<a href="${pageContext.request.contextPath}/order/completeOrder">Complete Order</a>
 </body>
 </html>

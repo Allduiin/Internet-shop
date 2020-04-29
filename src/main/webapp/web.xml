@@ -92,4 +92,25 @@
         <servlet-name>GetShoppingCart</servlet-name>
         <url-pattern>/shoppingCart/get</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteProduct</servlet-name>
+        <servlet-class>internetshop.controllers.shoppingcart.DeleteFromShoppingCartController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>deleteProduct</servlet-name>
+        <url-pattern>/shoppingCart/deleteProduct</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>completeOrder</servlet-name>
+        <servlet-class>internetshop.controllers.order.CompleteOrderController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>completeOrder</servlet-name>
+        <url-pattern>/order/completeOrder</url-pattern>
+    </servlet-mapping>
+
 </web-app>
