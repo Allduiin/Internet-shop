@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class RegistrationController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
-    UserService userService = (UserService) INJECTOR.getInstance(UserService.class);
+    private UserService userService = (UserService) INJECTOR.getInstance(UserService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class InjectDataController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
-    UserService userService = (UserService) INJECTOR.getInstance(UserService.class);
-    ProductService productService = (ProductService) INJECTOR.getInstance(ProductService.class);
+    private UserService userService = (UserService) INJECTOR.getInstance(UserService.class);
+    private ProductService productService = (ProductService) INJECTOR.getInstance(ProductService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

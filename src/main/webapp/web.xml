@@ -65,7 +65,7 @@
 
     <servlet>
         <servlet-name>allProducts</servlet-name>
-        <servlet-class>internetshop.controllers.product.ProductsController</servlet-class>
+        <servlet-class>internetshop.controllers.product.GetAllProductsController</servlet-class>
     </servlet>
 
     <servlet-mapping>
