@@ -29,6 +29,6 @@
     </tr>
 </c:forEach>
 </table>
-<a href="${pageContext.request.contextPath}/order/completeOrder">Complete Order</a>
+<a href="${pageContext.request.contextPath}/orders/completeOrder">Complete Order</a>
 </body>
 </html>

@@ -12,13 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GetAllOrderController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
-    OrderService orderService = (OrderService) INJECTOR.getInstance(OrderService.class);
+    private static final OrderService orderService =
+            (OrderService) INJECTOR.getInstance(OrderService.class);
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         List<Order> orders = orderService.getAll();
 
-        req.setAttribute("orders",orders);
-        req.getRequestDispatcher("").forward(req, resp);
+        req.setAttribute("orders", orders);
+        req.getRequestDispatcher("/WEB-INF/views/orders/all.jsp").forward(req, resp);
     }
 }

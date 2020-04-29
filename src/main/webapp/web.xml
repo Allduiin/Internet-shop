@@ -85,7 +85,7 @@
 
     <servlet>
         <servlet-name>GetShoppingCart</servlet-name>
-        <servlet-class>internetshop.controllers.shoppingcart.ShoppingCartController</servlet-class>
+        <servlet-class>internetshop.controllers.shoppingcart.GetAllShoppingCartsController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -110,7 +110,16 @@
 
     <servlet-mapping>
         <servlet-name>completeOrder</servlet-name>
-        <url-pattern>/order/completeOrder</url-pattern>
+        <url-pattern>/orders/completeOrder</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AllOrders</servlet-name>
+        <servlet-class>internetshop.controllers.order.GetAllOrderController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AllOrders</servlet-name>
+        <url-pattern>/orders/all</url-pattern>
+    </servlet-mapping>
 </web-app>
