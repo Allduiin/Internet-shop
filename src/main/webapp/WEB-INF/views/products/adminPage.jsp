@@ -25,10 +25,11 @@
             <c:out value="${product.price}"/>
         </td>
         <td>
-            <a href="${pageContext.request.contextPath}/shoppingCart/add?id=${product.id}">Add to Shopping Cart</a>
+            <a href="${pageContext.request.contextPath}/products/delete?id=${product.id}">Delete</a>
         </td>
     </tr>
     </c:forEach>
 </table>
+<a href="${pageContext.request.contextPath}/products/add">Add</a>
 </body>
 </html>

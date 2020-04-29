@@ -26,7 +26,7 @@ public class AddToShoppingCart extends HttpServlet {
         shoppingCartService.addProduct(shoppingCart, productService.getById(productId));
 
         req.setAttribute("message", productService.getById(productId)
-                .getName() + "was added to shopping cart");
+                .getName() + " was added to shopping cart");
         req.setAttribute("products", productService.getAll());
         req.getRequestDispatcher("/WEB-INF/views/products/all.jsp").forward(req, resp);
     }

@@ -4,12 +4,13 @@ import internetshop.lib.Injector;
 import internetshop.model.Product;
 import internetshop.service.ProductService;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AddProductController extends HttpServlet {
+public class GetAdminPageController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
     private static final ProductService productService =
             (ProductService) INJECTOR.getInstance(ProductService.class);
@@ -17,16 +18,9 @@ public class AddProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/products/add.jsp").forward(req, resp);
-    }
+        List<Product> allProducts = productService.getAll();
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
-        String name = req.getParameter("name");
-        String price = req.getParameter("price");
-        productService.create(new Product(name, Long.parseLong(price)));
-
-        resp.sendRedirect(req.getContextPath() + "/products/all.jsp");
+        req.setAttribute("products", allProducts);
+        req.getRequestDispatcher("/WEB-INF/views/products/adminPage.jsp").forward(req, resp);
     }
 }
