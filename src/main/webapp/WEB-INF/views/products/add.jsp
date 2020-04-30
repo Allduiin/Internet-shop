@@ -5,7 +5,7 @@
 </head>
 <body>
 <h3>
-    <form method="post" action="${pageContext.request.contextPath}/users/registration">
+    <form method="post" action="${pageContext.request.contextPath}/products/add">
         Please provide product<label>
         name<input type="text" name="name">
     </label>

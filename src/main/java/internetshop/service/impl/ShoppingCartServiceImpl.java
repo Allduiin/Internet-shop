@@ -24,7 +24,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public boolean deleteProduct(ShoppingCart shoppingCart, Product product) {
-        return shoppingCart.getProducts().remove(shoppingCart);
+        return shoppingCart.getProducts().remove(product);
     }
 
     @Override

@@ -3,17 +3,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Products</title>
+    <title>Shopping Cart</title>
 </head>
 <body>
-<h4 style="color: #44ff00">${message}</h4>
 <table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-    </tr>
-    <c:forEach var="product" items="${products}">
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Price</th>
+</tr>
+<c:forEach var="product" items="${products}">
     <tr>
         <td>
             <c:out value="${product.id}"/>
@@ -25,10 +24,11 @@
             <c:out value="${product.price}"/>
         </td>
         <td>
-            <a href="${pageContext.request.contextPath}/shoppingCart/add?id=${product.id}">Add to Shopping Cart</a>
+            <a href="${pageContext.request.contextPath}/shoppingCart/deleteProduct?id=${product.id}">Delete</a>
         </td>
     </tr>
-    </c:forEach>
+</c:forEach>
 </table>
+<a href="${pageContext.request.contextPath}/orders/completeOrder">Complete Order</a>
 </body>
 </html>
