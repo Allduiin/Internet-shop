@@ -1,23 +1,24 @@
 package internetshop.controllers;
 
+import internetshop.exceptions.AuthenticationException;
 import internetshop.lib.Injector;
 import internetshop.model.User;
-import internetshop.service.UserService;
+import internetshop.security.AuthenticationService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class RegistrationController extends HttpServlet {
+public class LoginController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
-    private static final UserService userService =
-            (UserService) INJECTOR.getInstance(UserService.class);
+    private static final AuthenticationService authService =
+            (AuthenticationService) INJECTOR.getInstance(AuthenticationService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
     }
 
     @Override
@@ -25,13 +26,14 @@ public class RegistrationController extends HttpServlet {
             throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("pwd");
-        String repeatPassword = req.getParameter("pwd-repeat");
-        if (password.equals(repeatPassword)) {
-            userService.create(new User(login, password));
-            resp.sendRedirect(req.getContextPath() + "/");
-        } else {
-            req.setAttribute("message", "Your passwords are ot equals");
-            req.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(req, resp);
+
+        try {
+            User user = authService.login(login, password);
+        } catch (AuthenticationException e) {
+            req.setAttribute("ErrorMsg", e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
+            return;
         }
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 }
