@@ -145,7 +145,7 @@
 
     <servlet>
         <servlet-name>getOrderInfo</servlet-name>
-        <servlet-class>internetshop.controllers.order.GetOrderInfo</servlet-class>
+        <servlet-class>internetshop.controllers.order.GetOrderInfoController</servlet-class>
     </servlet>
 
     <servlet-mapping>

@@ -17,6 +17,6 @@ public class DeleteProductController extends HttpServlet {
             throws IOException {
         Long id = Long.valueOf(req.getParameter("id"));
         productService.delete(id);
-        resp.sendRedirect(req.getContextPath() + "/products/adminPage.jsp");
+        resp.sendRedirect(req.getContextPath() + "/products/adminPage");
     }
 }

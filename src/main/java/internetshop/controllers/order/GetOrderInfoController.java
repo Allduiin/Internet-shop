@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GetOrderInfo extends HttpServlet {
+public class GetOrderInfoController extends HttpServlet {
     private static final Long USER_ID = 1L;
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
     private static final OrderService orderService =
@@ -19,7 +19,7 @@ public class GetOrderInfo extends HttpServlet {
             throws ServletException, IOException {
 
         req.setAttribute("order",
-                orderService.getById(USER_ID));
+                orderService.getById(Long.valueOf(req.getParameter("id"))));
         req.getRequestDispatcher("/WEB-INF/views/orders/orderInfo.jsp").forward(req, resp);
     }
 }
