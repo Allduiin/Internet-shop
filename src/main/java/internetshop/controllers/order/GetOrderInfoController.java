@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class GetOrderInfoController extends HttpServlet {
-    private static final Long USER_ID = 1L;
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
     private static final OrderService orderService =
             (OrderService) INJECTOR.getInstance(OrderService.class);
