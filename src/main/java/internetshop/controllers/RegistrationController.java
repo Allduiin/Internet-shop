@@ -17,7 +17,7 @@ public class RegistrationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/users/registration.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(req, resp);
     }
 
     @Override
@@ -28,10 +28,10 @@ public class RegistrationController extends HttpServlet {
         String repeatPassword = req.getParameter("pwd-repeat");
         if (password.equals(repeatPassword)) {
             userService.create(new User(login, password));
-            resp.sendRedirect(req.getContextPath() + "/");
+            resp.sendRedirect(req.getContextPath() + "/login");
         } else {
             req.setAttribute("message", "Your passwords are ot equals");
-            req.getRequestDispatcher("/WEB-INF/views/users/registration.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(req, resp);
         }
     }
 }
