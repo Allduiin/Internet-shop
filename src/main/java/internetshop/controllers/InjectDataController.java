@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class InjectDataController extends HttpServlet {
-    private static final Long USER_ID = 1L;
-    private static final Long USER_ID2 = 2L;
+    private static final Long USER_ID = 2L;
+    private static final Long USER_ID2 = 3L;
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
     private static final UserService userService =
             (UserService) INJECTOR.getInstance(UserService.class);

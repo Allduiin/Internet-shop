@@ -27,8 +27,13 @@ public class RegistrationController extends HttpServlet {
         String password = req.getParameter("pwd");
         String repeatPassword = req.getParameter("pwd-repeat");
         if (password.equals(repeatPassword)) {
-            userService.create(new User(login, password));
-            resp.sendRedirect(req.getContextPath() + "/login");
+            if (userService.findByLogin(login).orElse(null) != null) {
+                req.setAttribute("message", "This login is already existed");
+                req.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(req, resp);
+            } else {
+                userService.create(new User(login, password));
+                resp.sendRedirect(req.getContextPath() + "/login");
+            }
         } else {
             req.setAttribute("message", "Your passwords are ot equals");
             req.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(req, resp);

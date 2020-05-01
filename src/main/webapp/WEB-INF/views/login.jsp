@@ -10,5 +10,6 @@
     password<input type="password" name="pwd">
     <button type="submit" >Log in</button>
 </form>
+<p><a href="${pageContext.request.contextPath}/registration">Registration</a>
 </body>
 </html>
