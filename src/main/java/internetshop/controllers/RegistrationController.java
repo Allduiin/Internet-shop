@@ -27,7 +27,7 @@ public class RegistrationController extends HttpServlet {
         String password = req.getParameter("pwd");
         String repeatPassword = req.getParameter("pwd-repeat");
         if (password.equals(repeatPassword)) {
-            if (userService.findByLogin(login).orElse(null) != null) {
+            if (userService.findByLogin(login).isPresent()) {
                 req.setAttribute("message", "This login is already existed");
                 req.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(req, resp);
             } else {
