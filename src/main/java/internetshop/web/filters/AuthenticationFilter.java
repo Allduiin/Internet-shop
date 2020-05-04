@@ -38,12 +38,8 @@ public class AuthenticationFilter implements Filter {
 
         Long userId = (Long) req.getSession().getAttribute(USER_ID);
         if (userId == null) {
-            try {
-                userService.getById(userId);
-            } catch (NoSuchElementException e) {
                 resp.sendRedirect("/login");
                 return;
-            }
         }
 
         chain.doFilter(req, resp);
