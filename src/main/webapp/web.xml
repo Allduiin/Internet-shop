@@ -44,6 +44,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>internetshop.controllers.LogOutController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>registration</servlet-name>
         <servlet-class>internetshop.controllers.RegistrationController</servlet-class>
     </servlet>
@@ -173,6 +183,16 @@
         <servlet-name>deleteOrder</servlet-name>
         <url-pattern>/orders/delete</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>userOrders</servlet-name>
+        <servlet-class>internetshop.controllers.order.GetUserOrderController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>userOrders</servlet-name>
+        <url-pattern>/orders/userOrders</url-pattern>
+    </servlet-mapping>
     
     <filter>
         <filter-name>authenticationFilter</filter-name>
@@ -183,5 +203,14 @@
         <filter-name>authenticationFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
+
+    <filter>
+        <filter-name>authorizationFilter</filter-name>
+        <filter-class>internetshop.web.filters.AuthorizationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>authorizationFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
