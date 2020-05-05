@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class InjectDataController extends HttpServlet {
-    private static final Long USER_ID = 1L;
-    private static final Long USER_ID2 = 2L;
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
     private static final UserService userService =
             (UserService) INJECTOR.getInstance(UserService.class);
@@ -30,16 +28,16 @@ public class InjectDataController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        userService.create(new User("alisa","123412e"));
-        userService.create(new User("Vasya","7yu32r"));
+        Long userId1 = userService.create(new User("alisa","123412e")).getId();
+        Long userId2 = userService.create(new User("Vasya","7yu32r")).getId();
         Product bread = new Product("bread",5);
         Product computer = new Product("computer",1000);
         productService.create(bread);
         productService.create(computer);
         ShoppingCart shoppingCart =
-                shoppingCartService.create(new ShoppingCart(userService.getById(USER_ID)));
+                shoppingCartService.create(new ShoppingCart(userService.getById(userId1)));
         ShoppingCart shoppingCart2 =
-                shoppingCartService.create(new ShoppingCart(userService.getById(USER_ID2)));
+                shoppingCartService.create(new ShoppingCart(userService.getById(userId2)));
         shoppingCartService.addProduct(shoppingCart, bread);
         shoppingCartService.addProduct(shoppingCart, computer);
         shoppingCartService.addProduct(shoppingCart, bread);
