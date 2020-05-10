@@ -43,13 +43,13 @@ public class ProductDaoJDBCImpl implements ProductDao {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                return Optional.of(getProductFromResultSet(resultSet));
+                product = getProductFromResultSet(resultSet);
             }
             statement.close();
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
         }
-        return Optional.empty();
+        return Optional.of(product);
     }
 
     @Override
@@ -94,7 +94,9 @@ public class ProductDaoJDBCImpl implements ProductDao {
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
-            return statement.execute();
+            boolean execute = statement.execute();
+            statement.close();
+            return execute;
         } catch (SQLException e) {
             throw new RuntimeException("Can't delete by this Id", e);
         }
