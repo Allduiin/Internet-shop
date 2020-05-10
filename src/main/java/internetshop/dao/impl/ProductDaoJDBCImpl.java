@@ -1,6 +1,7 @@
 package internetshop.dao.impl;
 
 import internetshop.dao.ProductDao;
+import internetshop.lib.Dao;
 import internetshop.model.Product;
 import internetshop.storage.Storage;
 import internetshop.util.ConnectionUtil;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Dao
 public class ProductDaoJDBCImpl implements ProductDao {
     Connection connection = ConnectionUtil.getConnection();
 
