@@ -9,9 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.IntStream;
 
 @Dao
 public class ProductDaoImpl implements ProductDao {
@@ -22,8 +22,8 @@ public class ProductDaoImpl implements ProductDao {
         String query = "INSERT INTO products ( name, price) VALUES (?,?)";
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1,product.getName());
-            statement.setDouble(2,product.getPrice());
+            statement.setString(1, product.getName());
+            statement.setDouble(2, product.getPrice());
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -38,37 +38,62 @@ public class ProductDaoImpl implements ProductDao {
         Product product = new Product(null, 0);
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1,id);
+            statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Long productId = resultSet.getLong("product_id");
-                String name = resultSet.getString("name");
-                double price = resultSet.getDouble("price");
-                product.setId(productId);
-                product.setName(name);
-                product.setPrice(price);
+                return Optional.of(getProductFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
         }
-        return Optional.of(product);
+        return null;
     }
 
     @Override
     public List<Product> getAll() {
-        return Storage.products;
+        String query = "SELECT * FROM products";
+        ArrayList<Product> products = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                products.add(getProductFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Can't read result of statment", e);
+        }
+        return products;
     }
 
     @Override
     public Product update(Product product) {
-        IntStream.range(0, Storage.products.size())
-                .filter(x -> product.getId().equals(Storage.products.get(x).getId()))
-                .forEach(i -> Storage.products.set(i, product));
-        return product;
+        String query = "UPDATE products SET name = ?, price = ? WHERE product_id = ?;";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, product.getName());
+            statement.setDouble(2, product.getPrice());
+            statement.setLong(3, product.getId());
+            statement.execute();
+            return product;
+        } catch (SQLException e) {
+            throw new RuntimeException("Can't update this product", e);
+        }
     }
 
     @Override
     public boolean delete(Long id) {
-        return Storage.products.removeIf(product -> product.getId().equals(id));
+        String query = "DELETE FROM products WHERE product_id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, id);
+            return statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException("Can't delete by this Id", e);
+        }
+    }
+
+    private Product getProductFromResultSet(ResultSet rs) throws SQLException {
+        return new Product(rs.getLong("product_id"),
+                rs.getString("name"), rs.getDouble("price"));
     }
 }

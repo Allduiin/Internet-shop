@@ -16,5 +16,3 @@ CREATE TABLE `internet_shop`.`products` (
   PRIMARY KEY (`product_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
-TRUNCATE TABLE internet_shop.products; // рестарт таблицы

@@ -49,10 +49,12 @@ public class Main {
         Product product1 = new Product("iPhone", 1000);
         Product product2 = new Product("Nokia", 100);
         Product product3 = new Product("Sumsung", 500);
+        Product productUpdate = new Product(1L,"Vasa", 1000);
         productService.create(product1);
         productService.create(product2);
         productService.create(product3);
-
+        productService.update(productUpdate);
+        productService.delete(1L);
         User user1 = new User("Pasha", "15fe32d5f");
         User user2 = new User("Vasia", "8734t");
         User user3 = new User("Petia", "df15");
