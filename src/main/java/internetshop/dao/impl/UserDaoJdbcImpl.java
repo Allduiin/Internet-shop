@@ -1,9 +1,9 @@
 package internetshop.dao.impl;
 
-import internetshop.dao.ProductDao;
+import internetshop.dao.UserDao;
 import internetshop.lib.Dao;
 import internetshop.model.Product;
-import internetshop.storage.Storage;
+import internetshop.model.User;
 import internetshop.util.ConnectionUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,83 +14,99 @@ import java.util.List;
 import java.util.Optional;
 
 @Dao
-public class ProductDaoJdbcImpl implements ProductDao {
-
+public class UserDaoJdbcImpl implements UserDao {
     @Override
-    public Product create(Product product) {
+    public Optional<User> findByLogin(String login) {
         Connection connection = ConnectionUtil.getConnection();
-        String query = "INSERT INTO products ( name, price) VALUES (?,?)";
+        String query = "SELECT FROM users WHERE login = ?";
+        User user = null;
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, product.getName());
-            statement.setDouble(2, product.getPrice());
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            user = getUserFromResultSet(resultSet);
+            statement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException("Can't read result of statment", e);
+        }
+        return null;
+    }
+
+    @Override
+    public User create(User user) {
+        Connection connection = ConnectionUtil.getConnection();
+        String query = "INSERT INTO users ( login, password) VALUES (?,?)";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
             statement.execute();
             statement.close();
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
         }
-        Storage.addProduct(product);
-        return product;
+        return user;
     }
 
     @Override
-    public Optional<Product> getById(Long id) {
+    public Optional<User> getById(Long id) {
         Connection connection = ConnectionUtil.getConnection();
         String query = "SELECT * FROM products WHERE product_id = ?";
-        Product product = new Product(null, 0);
+        Optional<User> user = null;
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                product = getProductFromResultSet(resultSet);
+                user = Optional.of(getUserFromResultSet(resultSet));
             }
             statement.close();
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
         }
-        return Optional.of(product);
+        return user;
     }
 
     @Override
-    public List<Product> getAll() {
+    public List<User> getAll() {
+        List<User> users = new ArrayList<>();
         Connection connection = ConnectionUtil.getConnection();
-        String query = "SELECT * FROM products";
+        String query = "SELECT * FROM users";
         ArrayList<Product> products = new ArrayList<>();
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                products.add(getProductFromResultSet(resultSet));
+                users.add(getUserFromResultSet(resultSet));
             }
             statement.close();
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
         }
-        return products;
+        return users;
     }
 
     @Override
-    public Product update(Product product) {
+    public User update(User user) {
         Connection connection = ConnectionUtil.getConnection();
-        String query = "UPDATE products SET name = ?, price = ? WHERE product_id = ?;";
+        String query = "UPDATE users SET login = ?, password = ? WHERE user_id = ?;";
         try {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, product.getName());
-            statement.setDouble(2, product.getPrice());
-            statement.setLong(3, product.getId());
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+            statement.setLong(3, user.getId());
             statement.execute();
             statement.close();
-            return product;
         } catch (SQLException e) {
             throw new RuntimeException("Can't update this product", e);
         }
+        return user;
     }
 
     @Override
     public boolean delete(Long id) {
         Connection connection = ConnectionUtil.getConnection();
-        String query = "DELETE FROM products WHERE product_id = ?";
+        String query = "DELETE FROM users WHERE user_id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -102,8 +118,8 @@ public class ProductDaoJdbcImpl implements ProductDao {
         }
     }
 
-    private Product getProductFromResultSet(ResultSet rs) throws SQLException {
-        return new Product(rs.getLong("product_id"),
-                rs.getString("name"), rs.getDouble("price"));
+    private User getUserFromResultSet(ResultSet rs) throws SQLException {
+        return new User(rs.getLong("user_id"),
+                rs.getString("login"), rs.getString("password"));
     }
 }

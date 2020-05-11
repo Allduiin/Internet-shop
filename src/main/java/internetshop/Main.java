@@ -58,22 +58,11 @@ public class Main {
         User user1 = new User("Pasha", "15fe32d5f");
         User user2 = new User("Vasia", "8734t");
         User user3 = new User("Petia", "df15");
+        User userUpdate = new User(3L,"Vasa", "petya");
         userService.create(user1);
         userService.create(user2);
         userService.create(user3);
-        userService.delete(user3.getId());
-
-        ShoppingCart shoppingCart1 = new ShoppingCart(user1);
-        shoppingCartService.create(shoppingCart1);
-        shoppingCartService.addProduct(shoppingCart1, product1);
-        shoppingCartService.addProduct(shoppingCart1, product2);
-
-        ShoppingCart shoppingCart2 = new ShoppingCart(user2);
-        shoppingCartService.create(shoppingCart2);
-        shoppingCartService.addProduct(shoppingCart2, product2);
-        shoppingCartService.addProduct(shoppingCart2, product3);
-
-        orderService.completeOrder(shoppingCartService.getById(shoppingCart1.getId()).getProducts(),
-                shoppingCart1.getUser());
+        userService.update(userUpdate);
+        userService.delete(1L);
     }
 }
