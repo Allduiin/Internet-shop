@@ -16,3 +16,16 @@ CREATE TABLE `internet_shop`.`products` (
   PRIMARY KEY (`product_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE `internet_shop`.`orders` (
+  `order_id` BIGINT(11) NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT(11) NULL,
+  PRIMARY KEY (`order_id`),
+  INDEX `orders_users_fk_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `orders_users_fk`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `internet_shop`.`users` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
