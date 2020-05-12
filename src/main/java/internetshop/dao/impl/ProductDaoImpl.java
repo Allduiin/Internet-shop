@@ -1,15 +1,14 @@
 package internetshop.dao.impl;
 
 import internetshop.dao.ProductDao;
-import internetshop.lib.Dao;
 import internetshop.model.Product;
 import internetshop.storage.Storage;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-@Dao
 public class ProductDaoImpl implements ProductDao {
+
     @Override
     public Product create(Product product) {
         Storage.addProduct(product);
