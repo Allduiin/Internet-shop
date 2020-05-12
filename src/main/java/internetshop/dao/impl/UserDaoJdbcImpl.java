@@ -17,31 +17,31 @@ import java.util.Optional;
 public class UserDaoJdbcImpl implements UserDao {
     @Override
     public Optional<User> findByLogin(String login) {
-        Connection connection = ConnectionUtil.getConnection();
         String query = "SELECT FROM users WHERE login = ?";
-        User user = null;
-        try {
+        User user;
+        try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             user = getUserFromResultSet(resultSet);
-            statement.close();
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
         }
-        return null;
+        return Optional.of(user);
     }
 
     @Override
     public User create(User user) {
-        Connection connection = ConnectionUtil.getConnection();
         String query = "INSERT INTO users ( login, password) VALUES (?,?)";
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query,
+                    PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPassword());
-            statement.execute();
-            statement.close();
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            user.setId(resultSet.getLong(1));
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
         }
@@ -50,17 +50,15 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public Optional<User> getById(Long id) {
-        Connection connection = ConnectionUtil.getConnection();
         String query = "SELECT * FROM products WHERE product_id = ?";
         Optional<User> user = null;
-        try {
+        try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 user = Optional.of(getUserFromResultSet(resultSet));
             }
-            statement.close();
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
         }
@@ -70,16 +68,14 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
-        Connection connection = ConnectionUtil.getConnection();
         String query = "SELECT * FROM users";
         ArrayList<Product> products = new ArrayList<>();
-        try {
+        try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 users.add(getUserFromResultSet(resultSet));
             }
-            statement.close();
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
         }
@@ -88,15 +84,13 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        Connection connection = ConnectionUtil.getConnection();
         String query = "UPDATE users SET login = ?, password = ? WHERE user_id = ?;";
-        try {
+        try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPassword());
             statement.setLong(3, user.getId());
             statement.execute();
-            statement.close();
         } catch (SQLException e) {
             throw new RuntimeException("Can't update this product", e);
         }
@@ -105,14 +99,11 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public boolean delete(Long id) {
-        Connection connection = ConnectionUtil.getConnection();
         String query = "DELETE FROM users WHERE user_id = ?";
-        try {
+        try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
-            boolean execute = statement.execute();
-            statement.close();
-            return execute;
+            return statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException("Can't delete by this Id", e);
         }
