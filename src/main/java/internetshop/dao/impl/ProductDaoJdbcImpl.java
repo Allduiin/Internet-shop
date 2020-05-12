@@ -37,14 +37,13 @@ public class ProductDaoJdbcImpl implements ProductDao {
     public Optional<Product> getById(Long id) {
         Connection connection = ConnectionUtil.getConnection();
         String query = "SELECT * FROM products WHERE product_id = ?";
-        Product product = new Product(null, 0);
+        Product product;
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                product = getProductFromResultSet(resultSet);
-            }
+            resultSet.next();
+            product = getProductFromResultSet(resultSet);
             statement.close();
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
