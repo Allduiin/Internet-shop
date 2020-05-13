@@ -90,7 +90,7 @@ public class UserDaoJdbcImpl implements UserDao {
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPassword());
             statement.setLong(3, user.getId());
-            statement.execute();
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Can't update this product", e);
         }
@@ -99,18 +99,27 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public boolean delete(Long id) {
-        String query = "DELETE FROM users WHERE user_id = ?";
+        String query = "DELETE FROM shopping_carts WHERE user_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, id);
-            return statement.execute();
+            doQueryWithId(query, id, connection);
+            query = "DELETE FROM orders WHERE user_id = ?;";
+            doQueryWithId(query, id, connection);
+            query = "DELETE FROM users WHERE user_id = ?;";
+            doQueryWithId(query, id, connection);
         } catch (SQLException e) {
             throw new RuntimeException("Can't delete by this Id", e);
         }
+        return true;
     }
 
     private User getUserFromResultSet(ResultSet rs) throws SQLException {
         return new User(rs.getLong("user_id"),
                 rs.getString("login"), rs.getString("password"));
+    }
+
+    private int doQueryWithId(String query, Long id,Connection connection) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, id);
+        return statement.executeUpdate();
     }
 }

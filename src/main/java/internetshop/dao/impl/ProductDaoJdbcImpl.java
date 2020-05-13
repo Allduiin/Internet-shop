@@ -82,19 +82,28 @@ public class ProductDaoJdbcImpl implements ProductDao {
 
     @Override
     public boolean delete(Long id) {
-        String query = "DELETE FROM products WHERE product_id = ?";
+        int result;
+        String query = "DELETE FROM shopping_carts_products WHERE product_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, id);
-            boolean execute = statement.execute();
-            return execute;
+            doQueryWithId(query, id, connection);
+            query = "DELETE FROM orders_products WHERE product_id = ?;";
+            doQueryWithId(query, id, connection);
+            query = "DELETE FROM products WHERE product_id = ?;";
+            doQueryWithId(query, id, connection);
         } catch (SQLException e) {
             throw new RuntimeException("Can't delete by this Id", e);
         }
+        return true;
     }
 
     private Product getProductFromResultSet(ResultSet rs) throws SQLException {
         return new Product(rs.getLong("product_id"),
                 rs.getString("name"), rs.getDouble("price"));
+    }
+
+    private int doQueryWithId(String query, Long id,Connection connection) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, id);
+        return statement.executeUpdate();
     }
 }
