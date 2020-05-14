@@ -17,12 +17,13 @@ import java.util.Optional;
 public class UserDaoJdbcImpl implements UserDao {
     @Override
     public Optional<User> findByLogin(String login) {
-        String query = "SELECT FROM users WHERE login = ?";
+        String query = "SELECT * FROM users WHERE login = ?";
         User user;
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
             user = getUserFromResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);

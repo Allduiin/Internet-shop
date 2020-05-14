@@ -64,7 +64,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
     public List<ShoppingCart> getAll() {
         String query = "SELECT * FROM shopping_carts;";
         Long cartId;
-        List<ShoppingCart> shoppingCarts= new ArrayList<>();
+        List<ShoppingCart> shoppingCarts = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
@@ -74,23 +74,23 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
                         resultSet.getLong(2), getProductsByCartId(cartId)));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Can't get shoppingCart from db by Id", e);
+            throw new RuntimeException("Can't get all shoppingCart from db", e);
         }
         return shoppingCarts;
     }
 
     @Override
     public ShoppingCart update(ShoppingCart shoppingCart) {
-        String query = "UPDATE shopping_carts SET user_id = ? " +
-                "WHERE cart_id = ?;";
+        String query = "UPDATE shopping_carts SET user_id = ? "
+                + "WHERE cart_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1,shoppingCart.getId());
-            statement.setLong(2,shoppingCart.getUserId());
+            statement.setLong(1, shoppingCart.getUserId());
+            statement.setLong(2, shoppingCart.getId());
             statement.executeUpdate();
             query = "DELETE FROM shopping_carts_products WHERE cart_id = ?;";
             statement = connection.prepareStatement(query);
-            statement.setLong(1,shoppingCart.getId());
+            statement.setLong(1, shoppingCart.getId());
             statement.executeUpdate();
             addProducts(shoppingCart, connection);
             return shoppingCart;
@@ -101,29 +101,29 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
 
     @Override
     public boolean delete(Long id) {
-        String query ="DELETE FROM shopping_carts_products WHERE cart_id = ?;";
+        String query = "DELETE FROM shopping_carts_products WHERE cart_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1,id);
+            statement.setLong(1, id);
             statement.executeUpdate();
             query = "DELETE FROM shopping_carts WHERE cart_id = ?;";
             statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Can't delete shopping cart",e);
+            throw new RuntimeException("Can't delete shopping cart", e);
         }
         return true;
     }
 
     public List<Product> getProductsByCartId(Long id) {
         List<Product> products = new ArrayList<>();
-        String query = "SELECT pr.product_id ,pr.name, pr.price FROM shopping_carts sc" +
-                " INNER JOIN shopping_carts_products scp" +
-                " ON sc.cart_id = scp.cart_id" +
-                " INNER JOIN products pr" +
-                " ON scp.product_id = pr.product_id" +
-                " WHERE sc.cart_id = ?;";
+        String query = "SELECT pr.product_id ,pr.name, pr.price FROM shopping_carts sc"
+                + " INNER JOIN shopping_carts_products scp"
+                + " ON sc.cart_id = scp.cart_id"
+                + " INNER JOIN products pr"
+                + " ON scp.product_id = pr.product_id"
+                + " WHERE sc.cart_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -151,7 +151,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             resultSet.next();
             return resultSet.getLong(1);
         } catch (SQLException e) {
-            throw new RuntimeException("Can't get products from shoppingCart Id", e);
+            throw new RuntimeException("Can't get user_id from shoppingCart_id", e);
         }
     }
 

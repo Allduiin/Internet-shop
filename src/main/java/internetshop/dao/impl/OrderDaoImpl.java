@@ -1,7 +1,6 @@
 package internetshop.dao.impl;
 
 import internetshop.dao.OrderDao;
-import internetshop.lib.Dao;
 import internetshop.model.Order;
 import internetshop.model.User;
 import internetshop.storage.Storage;
@@ -10,11 +9,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-@Dao
 public class OrderDaoImpl implements OrderDao {
     @Override
     public Order create(Order order) {
-        Order orderClone = new Order(List.copyOf(order.getProducts()), order.getUser());
+        Order orderClone = new Order(order.getUserId(), List.copyOf(order.getProducts()));
         Storage.addOrder(orderClone);
         return orderClone;
     }
@@ -22,7 +20,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getUserOrders(User user) {
         return Storage.orders.stream()
-                .filter(o -> o.getUser().equals(user))
+                .filter(o -> o.getUserId().equals(user.getId()))
                 .collect(Collectors.toList());
     }
 

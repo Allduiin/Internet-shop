@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-
 public class UserDaoImpl implements UserDao {
     @Override
     public User create(User user) {

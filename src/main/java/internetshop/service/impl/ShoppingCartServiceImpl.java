@@ -19,6 +19,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart addProduct(ShoppingCart shoppingCart, Product product) {
         shoppingCart.addItem(product);
+        shoppingCartDao.update(shoppingCart);
         return shoppingCart;
     }
 
@@ -35,8 +36,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCart getByUserId(Long userId) {
-        return shoppingCartDao.getByUserId(userId)
-                .orElse(create(new ShoppingCart(userId)));
+        return shoppingCartDao.getByUserId(userId).get();
     }
 
     @Override
