@@ -3,6 +3,7 @@ package internetshop.dao.impl;
 import internetshop.dao.UserDao;
 import internetshop.lib.Dao;
 import internetshop.model.Product;
+import internetshop.model.Role;
 import internetshop.model.User;
 import internetshop.util.ConnectionUtil;
 import java.sql.Connection;
@@ -18,17 +19,18 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public Optional<User> findByLogin(String login) {
         String query = "SELECT * FROM users WHERE login = ?";
-        User user;
+        User user = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            user = getUserFromResultSet(resultSet);
+            if (resultSet.next()) {
+                user = getUserFromResultSet(resultSet);
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
         }
-        return Optional.of(user);
+        return Optional.ofNullable(user);
     }
 
     @Override
@@ -43,6 +45,8 @@ public class UserDaoJdbcImpl implements UserDao {
             ResultSet resultSet = statement.getGeneratedKeys();
             resultSet.next();
             user.setId(resultSet.getLong(1));
+            setRole(user.getId(), 2L);
+            user.setRoles(getRoles(user.getId()));
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
         }
@@ -51,7 +55,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public Optional<User> getById(Long id) {
-        String query = "SELECT * FROM products WHERE product_id = ?";
+        String query = "SELECT * FROM users WHERE user_id = ?";
         Optional<User> user = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -100,27 +104,58 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public boolean delete(Long id) {
-        String query = "DELETE FROM shopping_carts WHERE user_id = ?;";
+        String query = "DELETE FROM users_roles WHERE user_id = ?";
         try (Connection connection = ConnectionUtil.getConnection()) {
-            doQueryWithId(query, id, connection);
-            query = "DELETE FROM orders WHERE user_id = ?;";
-            doQueryWithId(query, id, connection);
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, id);
+            statement.executeUpdate();
             query = "DELETE FROM users WHERE user_id = ?;";
-            doQueryWithId(query, id, connection);
+            statement = connection.prepareStatement(query);
+            statement.setLong(1, id);
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Can't delete by this Id", e);
         }
         return true;
     }
 
-    private User getUserFromResultSet(ResultSet rs) throws SQLException {
-        return new User(rs.getLong("user_id"),
-                rs.getString("login"), rs.getString("password"));
+    private List<Role> getRoles(Long userId) {
+        String query = "SELECT r.name FROM users u "
+                + "INNER JOIN users_roles ur "
+                + "ON u.user_id = ur.user_id "
+                + "INNER JOIN roles r "
+                + "ON ur.role_id = r.role_id "
+                + "WHERE u.user_id = ?;";
+        List<Role> roles = new ArrayList<>();
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                roles.add(Role.of(resultSet.getString(1)));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Can't get role by user Id", e);
+        }
+        return roles;
     }
 
-    private int doQueryWithId(String query, Long id,Connection connection) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setLong(1, id);
-        return statement.executeUpdate();
+    private void setRole(Long userId, Long roleId) {
+        String query = "INSERT INTO users_roles ( user_id, role_id) VALUES (?,?)";
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, userId);
+            statement.setLong(2, roleId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Can't set role to user", e);
+        }
+    }
+
+    private User getUserFromResultSet(ResultSet rs) throws SQLException {
+        User user = new User(rs.getLong("user_id"),
+                rs.getString("login"), rs.getString("password"));
+        user.setRoles(getRoles(user.getId()));
+        return user;
     }
 }

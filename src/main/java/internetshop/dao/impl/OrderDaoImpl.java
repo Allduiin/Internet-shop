@@ -2,7 +2,6 @@ package internetshop.dao.impl;
 
 import internetshop.dao.OrderDao;
 import internetshop.model.Order;
-import internetshop.model.User;
 import internetshop.storage.Storage;
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +17,9 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getUserOrders(User user) {
+    public List<Order> getUserOrders(Long userId) {
         return Storage.orders.stream()
-                .filter(o -> o.getUserId().equals(user.getId()))
+                .filter(o -> o.getUserId().equals(userId))
                 .collect(Collectors.toList());
     }
 

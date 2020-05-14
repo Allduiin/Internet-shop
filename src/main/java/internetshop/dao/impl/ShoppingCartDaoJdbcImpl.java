@@ -36,18 +36,21 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
     public Optional<ShoppingCart> getByUserId(Long userId) {
         List<Product> products;
         Long cartId;
+        ShoppingCart shoppingCart = null;
         String query = "SELECT cart_id FROM shopping_carts WHERE user_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, userId);
             ResultSet resultSetCart = statement.executeQuery();
-            resultSetCart.next();
-            cartId = resultSetCart.getLong(1);
-            products = getProductsByCartId(cartId);
+            if (resultSetCart.next()) {
+                cartId = resultSetCart.getLong(1);
+                products = getProductsByCartId(cartId);
+                shoppingCart = new ShoppingCart(cartId, userId, products);
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Can't get shoppingCart from db by userId", e);
         }
-        return Optional.of(new ShoppingCart(cartId, userId, products));
+        return Optional.ofNullable(shoppingCart);
     }
 
     @Override

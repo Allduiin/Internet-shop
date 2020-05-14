@@ -6,8 +6,7 @@
     <title>Order Info</title>
 </head>
 <body>
-<p>Username: ${order.user.login}
-<p>UserId: ${order.user.id}
+<p>UserId: ${order.userId}
 <table border="1">
     <tr>
         <th>ID</th>

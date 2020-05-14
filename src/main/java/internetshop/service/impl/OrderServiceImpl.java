@@ -6,7 +6,6 @@ import internetshop.lib.Injector;
 import internetshop.lib.Service;
 import internetshop.model.Order;
 import internetshop.model.Product;
-import internetshop.model.User;
 import internetshop.service.OrderService;
 import internetshop.service.ShoppingCartService;
 import java.util.List;
@@ -29,8 +28,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getUserOrders(User user) {
-        return orderDao.getUserOrders(user);
+    public List<Order> getUserOrders(Long userId) {
+        return orderDao.getUserOrders(userId);
     }
 
     @Override

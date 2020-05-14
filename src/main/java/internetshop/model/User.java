@@ -57,6 +57,6 @@ public class User {
                 + "id=" + id
                 + ", login='" + login + '\''
                 + ", password='" + password
-                + '}';
+                + roles.toString() + " }";
     }
 }

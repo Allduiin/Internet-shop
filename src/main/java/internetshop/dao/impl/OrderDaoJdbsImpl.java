@@ -4,7 +4,6 @@ import internetshop.dao.OrderDao;
 import internetshop.lib.Dao;
 import internetshop.model.Order;
 import internetshop.model.Product;
-import internetshop.model.User;
 import internetshop.util.ConnectionUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,12 +44,12 @@ public class OrderDaoJdbsImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getUserOrders(User user) {
+    public List<Order> getUserOrders(Long userId) {
         List<Order> orders = new ArrayList<>();
-        String query ="SELECT order_id FROM orders WHERE user_id = ?";
+        String query = "SELECT order_id FROM orders WHERE user_id = ?";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, user.getId());
+            statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 orders.add(getById(resultSet.getLong(1)).get());

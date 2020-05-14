@@ -1,11 +1,9 @@
 package internetshop.controllers;
 
 import internetshop.lib.Injector;
-import internetshop.model.Role;
 import internetshop.model.User;
 import internetshop.service.UserService;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +31,7 @@ public class RegistrationController extends HttpServlet {
                 req.setAttribute("message", "This login is already existed");
                 req.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(req, resp);
             } else {
-                userService.create(new User(login, password)).setRoles(List.of(Role.of("USER")));
+                Long userId = userService.create(new User(login, password)).getId();
                 resp.sendRedirect(req.getContextPath() + "/login");
             }
         } else {
