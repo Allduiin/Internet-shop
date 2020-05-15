@@ -36,17 +36,16 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public Optional<Product> getById(Long id) {
         String query = "SELECT * FROM products WHERE product_id = ?";
-        Product product;
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            product = getProductFromResultSet(resultSet);
+            Product product = getProductFromResultSet(resultSet);
+            return Optional.of(product);
         } catch (SQLException e) {
             throw new RuntimeException("Can't read result of statment", e);
         }
-        return Optional.of(product);
     }
 
     @Override
@@ -101,7 +100,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
                 rs.getString("name"), rs.getDouble("price"));
     }
 
-    private int doQueryWithId(String query, Long id,Connection connection) throws SQLException {
+    private int doQueryWithId(String query, Long id, Connection connection) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, id);
         return statement.executeUpdate();

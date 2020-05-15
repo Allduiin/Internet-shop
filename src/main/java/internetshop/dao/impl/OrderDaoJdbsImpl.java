@@ -35,12 +35,8 @@ public class OrderDaoJdbsImpl implements OrderDao {
 
     @Override
     public Optional<Order> getById(Long id) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
             return Optional.of(new Order(id,
                     getUserIdFromOrderId(id), getProductsByOrderId(id)));
-        } catch (SQLException e) {
-            throw new RuntimeException("Can't get order from db by Id", e);
-        }
     }
 
     @Override
@@ -63,20 +59,21 @@ public class OrderDaoJdbsImpl implements OrderDao {
     @Override
     public List<Order> getAll() {
         String query = "SELECT * FROM orders;";
-        Long orderId;
-        List<Order> orders = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
+            List<Order> orders = new ArrayList<>();
             while (resultSet.next()) {
-                orderId = resultSet.getLong(1);
-                orders.add(new Order(orderId,
-                        resultSet.getLong(2), getProductsByOrderId(orderId)));
+                orders.add(new Order(resultSet.getLong(1),
+                        resultSet.getLong(2)));
             }
+            for (Order order: orders) {
+                order.setProducts(getProductsByOrderId(order.getId()));
+            }
+            return orders;
         } catch (SQLException e) {
             throw new RuntimeException("Can't get all orders from db", e);
         }
-        return orders;
     }
 
     @Override

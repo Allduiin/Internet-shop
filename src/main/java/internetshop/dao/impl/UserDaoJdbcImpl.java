@@ -74,7 +74,6 @@ public class UserDaoJdbcImpl implements UserDao {
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM users";
-        ArrayList<Product> products = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
@@ -141,7 +140,7 @@ public class UserDaoJdbcImpl implements UserDao {
     }
 
     private void setRole(Long userId, Long roleId) {
-        String query = "INSERT INTO users_roles ( user_id, role_id) VALUES (?,?)";
+        String query = "INSERT INTO users_roles (user_id, role_id) VALUES (?,?)";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, userId);
