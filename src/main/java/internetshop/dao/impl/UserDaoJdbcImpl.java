@@ -2,7 +2,6 @@ package internetshop.dao.impl;
 
 import internetshop.dao.UserDao;
 import internetshop.lib.Dao;
-import internetshop.model.Product;
 import internetshop.model.Role;
 import internetshop.model.User;
 import internetshop.util.ConnectionUtil;

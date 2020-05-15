@@ -35,8 +35,8 @@ public class OrderDaoJdbsImpl implements OrderDao {
 
     @Override
     public Optional<Order> getById(Long id) {
-            return Optional.of(new Order(id,
-                    getUserIdFromOrderId(id), getProductsByOrderId(id)));
+        return Optional.of(new Order(id,
+                getUserIdFromOrderId(id), getProductsByOrderId(id)));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class OrderDaoJdbsImpl implements OrderDao {
                 orders.add(new Order(resultSet.getLong(1),
                         resultSet.getLong(2)));
             }
-            for (Order order: orders) {
+            for (Order order : orders) {
                 order.setProducts(getProductsByOrderId(order.getId()));
             }
             return orders;
