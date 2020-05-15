@@ -72,7 +72,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
             statement.setString(1, product.getName());
             statement.setDouble(2, product.getPrice());
             statement.setLong(3, product.getId());
-            statement.execute();
+            statement.executeUpdate();
             return product;
         } catch (SQLException e) {
             throw new RuntimeException("Can't update this product", e);
@@ -81,7 +81,6 @@ public class ProductDaoJdbcImpl implements ProductDao {
 
     @Override
     public boolean delete(Long id) {
-        int result;
         String query = "DELETE FROM shopping_carts_products WHERE product_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             doQueryWithId(query, id, connection);

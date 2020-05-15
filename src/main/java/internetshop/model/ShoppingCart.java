@@ -19,6 +19,11 @@ public class ShoppingCart {
         this.products = products;
     }
 
+    public ShoppingCart(Long id, Long userId) {
+        this.id = id;
+        this.userId = userId;
+    }
+
     public Long getId() {
         return id;
     }

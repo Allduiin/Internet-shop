@@ -40,11 +40,9 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, userId);
             ResultSet resultSetCart = statement.executeQuery();
-            Long cartId;
-            List<Product> products;
             if (resultSetCart.next()) {
-                cartId = resultSetCart.getLong(1);
-                products = getProductsByCartId(cartId);
+                Long cartId = resultSetCart.getLong(1);
+                List<Product> products = getProductsByCartId(cartId);
                 shoppingCart = new ShoppingCart(cartId, userId, products);
             }
         } catch (SQLException e) {
@@ -66,11 +64,12 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
-            Long cartId;
             while (resultSet.next()) {
-                cartId = resultSet.getLong(1);
-                shoppingCarts.add(new ShoppingCart(cartId,
-                        resultSet.getLong(2), getProductsByCartId(cartId)));
+                shoppingCarts.add(new ShoppingCart(resultSet.getLong(1),
+                        resultSet.getLong(2)));
+            }
+            for (ShoppingCart shoppingCart : shoppingCarts) {
+                shoppingCart.setProducts(getProductsByCartId(shoppingCart.getId()));
             }
         } catch (SQLException e) {
             throw new RuntimeException("Can't get all shoppingCart from db", e);
