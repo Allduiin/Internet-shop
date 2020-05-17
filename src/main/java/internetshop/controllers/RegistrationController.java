@@ -5,10 +5,12 @@ import internetshop.model.User;
 import internetshop.service.UserService;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@WebServlet(value = "/registration")
 public class RegistrationController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
     private static final UserService userService =

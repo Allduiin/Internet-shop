@@ -6,10 +6,12 @@ import internetshop.service.UserService;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@WebServlet(value = "/users/all")
 public class UsersController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
     private static final UserService userService =

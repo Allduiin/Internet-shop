@@ -7,10 +7,12 @@ import internetshop.service.OrderService;
 import internetshop.service.ShoppingCartService;
 import internetshop.service.UserService;
 import java.io.IOException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@WebServlet("/users/delete")
 public class DeleteUserController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
     private static final UserService userService =
