@@ -5,10 +5,12 @@ import internetshop.service.OrderService;
 import internetshop.service.ShoppingCartService;
 import internetshop.service.UserService;
 import java.io.IOException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@WebServlet(value = "/orders/completeOrder")
 public class CompleteOrderController extends HttpServlet {
     private static final String USER_ID = "user_id";
     private static final Injector INJECTOR = Injector.getInstance("internetshop");

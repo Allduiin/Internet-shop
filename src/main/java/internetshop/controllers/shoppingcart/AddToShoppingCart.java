@@ -6,10 +6,12 @@ import internetshop.service.ProductService;
 import internetshop.service.ShoppingCartService;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@WebServlet(value = "/shoppingCart/add")
 public class AddToShoppingCart extends HttpServlet {
     private static final String USER_ID = "user_id";
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
