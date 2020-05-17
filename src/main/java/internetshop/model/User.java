@@ -13,6 +13,12 @@ public class User {
         this.password = password;
     }
 
+    public User(Long id, String login, String password) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+    }
+
     public List<Role> getRoles() {
         return roles;
     }
@@ -51,6 +57,6 @@ public class User {
                 + "id=" + id
                 + ", login='" + login + '\''
                 + ", password='" + password
-                + '}';
+                + roles.toString() + " }";
     }
 }
