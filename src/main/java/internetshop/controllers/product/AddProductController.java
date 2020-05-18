@@ -5,10 +5,12 @@ import internetshop.model.Product;
 import internetshop.service.ProductService;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@WebServlet(value = "/products/add")
 public class AddProductController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("internetshop");
     private static final ProductService productService =
