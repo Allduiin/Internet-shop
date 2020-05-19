@@ -33,7 +33,7 @@ public class RegistrationController extends HttpServlet {
                 req.setAttribute("message", "This login is already existed");
                 req.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(req, resp);
             } else {
-                Long userId = userService.create(new User(login, password)).getId();
+                userService.create(new User(login, password));
                 resp.sendRedirect(req.getContextPath() + "/login");
             }
         } else {

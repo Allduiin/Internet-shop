@@ -1,4 +1,4 @@
-package internetshop.dao.impl;
+package internetshop.dao.impl.old;
 
 import internetshop.dao.ProductDao;
 import internetshop.model.Product;

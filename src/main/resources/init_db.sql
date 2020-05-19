@@ -67,6 +67,7 @@ CREATE TABLE `users`
     `user_id`  bigint       NOT NULL AUTO_INCREMENT,
     `login`    varchar(225) NOT NULL,
     `password` varchar(225) NOT NULL,
+    `salt` BINARY(16) NOT NULL,
     PRIMARY KEY (`user_id`),
     UNIQUE KEY `user name_UNIQUE` (`login`)
 ) ENGINE = InnoDB
