@@ -56,7 +56,7 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public Optional<User> getById(Long id) {
         String query = "SELECT * FROM users WHERE user_id = ?";
-        Optional<User> user = null;
+        Optional<User> user = Optional.empty();
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);

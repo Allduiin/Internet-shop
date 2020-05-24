@@ -1,7 +1,5 @@
 package internetshop.web.filters;
 
-import internetshop.lib.Injector;
-import internetshop.service.UserService;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,13 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AuthenticationFilter implements Filter {
-    private static final Injector INJECTOR = Injector.getInstance("internetshop");
-    private static final UserService userService =
-            (UserService) INJECTOR.getInstance(UserService.class);
     private static final String USER_ID = "user_id";
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig){
 
     }
 

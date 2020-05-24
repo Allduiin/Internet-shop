@@ -1,11 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="products" scope="request" type="java.util.List<internetshop.model.Product>"/>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <html>
 <head>
     <title>Shopping Cart</title>
 </head>
 <body>
+<div class="card-body">
+    <%@include file="/WEB-INF/views/menu.jsp" %>
+</div>
 <table border="1">
 <tr>
     <th>ID</th>

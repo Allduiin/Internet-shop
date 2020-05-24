@@ -99,9 +99,8 @@ public class ProductDaoJdbcImpl implements ProductDao {
                 rs.getString("name"), rs.getDouble("price"));
     }
 
-    private int doQueryWithId(String query, Long id, Connection connection) throws SQLException {
+    private void doQueryWithId(String query, Long id, Connection connection) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, id);
-        return statement.executeUpdate();
     }
 }
