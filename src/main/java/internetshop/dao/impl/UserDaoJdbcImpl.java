@@ -95,6 +95,10 @@ public class UserDaoJdbcImpl implements UserDao {
             statement.setString(2, user.getPassword());
             statement.setLong(3, user.getId());
             statement.executeUpdate();
+            deleteAllRoles(user.getId());
+            for (Role role : user.getRoles()) {
+                setRole(user.getId(), role.getId());
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Can't update this product", e);
         }
@@ -103,13 +107,10 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public boolean delete(Long id) {
-        String query = "DELETE FROM users_roles WHERE user_id = ?";
         try (Connection connection = ConnectionUtil.getConnection()) {
+            deleteAllRoles(id);
+            String query = "DELETE FROM users WHERE user_id = ?;";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, id);
-            statement.executeUpdate();
-            query = "DELETE FROM users WHERE user_id = ?;";
-            statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -145,6 +146,17 @@ public class UserDaoJdbcImpl implements UserDao {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, userId);
             statement.setLong(2, roleId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Can't set role to user", e);
+        }
+    }
+
+    private void deleteAllRoles(Long userId) {
+        String query = "DELETE FROM users_roles WHERE user_id = ?";
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, userId);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Can't set role to user", e);
