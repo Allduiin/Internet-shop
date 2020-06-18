@@ -3,7 +3,6 @@ package internetshop.controllers.order;
 import internetshop.lib.Injector;
 import internetshop.service.OrderService;
 import internetshop.service.ShoppingCartService;
-import internetshop.service.UserService;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +17,6 @@ public class CompleteOrderController extends HttpServlet {
             (OrderService) INJECTOR.getInstance(OrderService.class);
     private static final ShoppingCartService shoppingCartService =
             (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
-    private static final UserService userService =
-            (UserService) INJECTOR.getInstance(UserService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

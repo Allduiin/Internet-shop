@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    private static Injector injector = Injector.getInstance("internetshop");
+    private static final Injector INJECTOR = Injector.getInstance("internetshop");
 
     @Inject
     private OrderDao orderDao;
@@ -22,7 +22,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order(userId, products);
         order = orderDao.create(order);
         ShoppingCartService shoppingCartService =
-                (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+                (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
         shoppingCartService.clear(shoppingCartService.getByUserId(userId));
         return order;
     }

@@ -1,5 +1,28 @@
 CREATE SCHEMA `internet_shop` DEFAULT CHARACTER SET utf8;
 
+CREATE TABLE `users`
+(
+    `user_id`  bigint       NOT NULL AUTO_INCREMENT,
+    `login`    varchar(225) NOT NULL,
+    `password` varchar(225) NOT NULL,
+    `salt`     BINARY(16)   NOT NULL,
+    PRIMARY KEY (`user_id`),
+    UNIQUE KEY `user name_UNIQUE` (`login`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 69
+  DEFAULT CHARSET = utf8;
+
+CREATE TABLE `users_roles`
+(
+    `user_id` bigint NOT NULL,
+    `role_id` bigint NOT NULL,
+    KEY `users_fk_idx` (`user_id`),
+    KEY `role_fk_idx` (`role_id`),
+    CONSTRAINT `role_fk` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`),
+    CONSTRAINT `users_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
+
 CREATE TABLE `orders`
 (
     `order_id` bigint NOT NULL AUTO_INCREMENT,
@@ -8,7 +31,7 @@ CREATE TABLE `orders`
     KEY `orders_users_fk_idx` (`user_id`),
     CONSTRAINT `orders_users_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 19
+  AUTO_INCREMENT = 28
   DEFAULT CHARSET = utf8;
 
 CREATE TABLE `orders_products`
@@ -29,7 +52,7 @@ CREATE TABLE `products`
     `price`      double       NOT NULL,
     PRIMARY KEY (`product_id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 100
+  AUTO_INCREMENT = 127
   DEFAULT CHARSET = utf8;
 
 CREATE TABLE `roles`
@@ -39,6 +62,8 @@ CREATE TABLE `roles`
     PRIMARY KEY (`role_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+INSERT INTO `internet_shop`.`roles` (`role_id`, `name`) VALUES ('1', 'ADMIN');
+INSERT INTO `internet_shop`.`roles` (`role_id`, `name`) VALUES ('2', 'USER');
 
 CREATE TABLE `shopping_carts`
 (
@@ -48,7 +73,7 @@ CREATE TABLE `shopping_carts`
     KEY `shoppingcart_user_fk_idx` (`user_id`),
     CONSTRAINT `shoppingcart_user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 34
+  AUTO_INCREMENT = 57
   DEFAULT CHARSET = utf8;
 
 CREATE TABLE `shopping_carts_products`
@@ -67,11 +92,11 @@ CREATE TABLE `users`
     `user_id`  bigint       NOT NULL AUTO_INCREMENT,
     `login`    varchar(225) NOT NULL,
     `password` varchar(225) NOT NULL,
-    `salt` BINARY(16) NOT NULL,
+    `salt`     binary(16)   NOT NULL,
     PRIMARY KEY (`user_id`),
     UNIQUE KEY `user name_UNIQUE` (`login`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 69
+  AUTO_INCREMENT = 96
   DEFAULT CHARSET = utf8;
 
 CREATE TABLE `users_roles`

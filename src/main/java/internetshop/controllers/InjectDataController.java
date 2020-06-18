@@ -36,10 +36,13 @@ public class InjectDataController extends HttpServlet {
         Product computer = new Product("computer",1000);
         productService.create(bread);
         productService.create(computer);
+        User admin = userService.create(new User("Admin","admin"));
+        Role role = new Role(Role.RoleName.ADMIN);
+        role.setId(1L);
+        admin.setRoles(List.of(new Role(Role.RoleName.ADMIN)));
+        userService.update(admin);
         Long userId1 = userService.create(new User("alisa","123412e")).getId();
         Long userId2 = userService.create(new User("Vasya","7yu32r")).getId();
-        User admin = userService.create(new User("admin", "1"));
-        admin.setRoles(List.of(Role.of("ADMIN")));
         ShoppingCart shoppingCart =
                 shoppingCartService.create(new ShoppingCart(userId1));
         ShoppingCart shoppingCart2 =

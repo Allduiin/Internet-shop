@@ -83,11 +83,11 @@ public class ProductDaoJdbcImpl implements ProductDao {
     public boolean delete(Long id) {
         String query = "DELETE FROM shopping_carts_products WHERE product_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
-            doQueryWithId(query, id, connection);
+            runQueryWithId(query, id, connection);
             query = "DELETE FROM orders_products WHERE product_id = ?;";
-            doQueryWithId(query, id, connection);
+            runQueryWithId(query, id, connection);
             query = "DELETE FROM products WHERE product_id = ?;";
-            doQueryWithId(query, id, connection);
+            runQueryWithId(query, id, connection);
         } catch (SQLException e) {
             throw new RuntimeException("Can't delete by this Id", e);
         }
@@ -99,9 +99,8 @@ public class ProductDaoJdbcImpl implements ProductDao {
                 rs.getString("name"), rs.getDouble("price"));
     }
 
-    private int doQueryWithId(String query, Long id, Connection connection) throws SQLException {
+    private void runQueryWithId(String query, Long id, Connection connection) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, id);
-        return statement.executeUpdate();
     }
 }

@@ -25,7 +25,7 @@ public class AuthorizationFilter implements Filter {
     private Map<String, List<Role.RoleName>> protectedUrls = new HashMap<>();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         protectedUrls.put("/users/all", List.of(Role.RoleName.ADMIN));
         protectedUrls.put("/users/delete", List.of(Role.RoleName.ADMIN));
         protectedUrls.put("/products/adminPage", List.of(Role.RoleName.ADMIN));
@@ -57,7 +57,6 @@ public class AuthorizationFilter implements Filter {
             chain.doFilter(req, resp);
         } else {
             req.getRequestDispatcher("/WEB-INF/views/accessDenied.jsp").forward(req, resp);
-            return;
         }
     }
 
