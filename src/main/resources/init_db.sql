@@ -62,6 +62,8 @@ CREATE TABLE `roles`
     PRIMARY KEY (`role_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+INSERT INTO `internet_shop`.`roles` (`role_id`, `name`) VALUES ('1', 'ADMIN');
+INSERT INTO `internet_shop`.`roles` (`role_id`, `name`) VALUES ('2', 'USER');
 
 CREATE TABLE `shopping_carts`
 (
