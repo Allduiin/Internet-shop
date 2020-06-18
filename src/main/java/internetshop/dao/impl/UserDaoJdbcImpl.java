@@ -48,7 +48,7 @@ public class UserDaoJdbcImpl implements UserDao {
             setRole(user.getId(), 2L);
             user.setRoles(getRoles(user.getId()));
         } catch (SQLException e) {
-            throw new RuntimeException("Can't read result of statment", e);
+            throw new RuntimeException("Can't create user", e);
         }
         return user;
     }
@@ -100,7 +100,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 setRole(user.getId(), role.getId());
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Can't update this product", e);
+            throw new RuntimeException("Can't update this user", e);
         }
         return user;
     }

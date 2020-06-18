@@ -2,6 +2,7 @@ package internetshop.controllers;
 
 import internetshop.lib.Injector;
 import internetshop.model.Product;
+import internetshop.model.Role;
 import internetshop.model.ShoppingCart;
 import internetshop.model.User;
 import internetshop.service.OrderService;
@@ -9,6 +10,7 @@ import internetshop.service.ProductService;
 import internetshop.service.ShoppingCartService;
 import internetshop.service.UserService;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +36,9 @@ public class InjectDataController extends HttpServlet {
         Product computer = new Product("computer",1000);
         productService.create(bread);
         productService.create(computer);
+        User admin = userService.create(new User("Admin","admin"));
+        admin.setRoles(List.of(new Role(Role.RoleName.ADMIN)));
+        userService.update(admin);
         Long userId1 = userService.create(new User("alisa","123412e")).getId();
         Long userId2 = userService.create(new User("Vasya","7yu32r")).getId();
         ShoppingCart shoppingCart =
